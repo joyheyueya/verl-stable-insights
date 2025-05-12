@@ -118,7 +118,7 @@ for i in $(seq 0 $((num_models-1))); do
     export EPOCHS=2
     export PROJECT_NAME=${project_names[$i]}
 
-    command="bash /home/anikait.singh/verl-stable/scripts/grpo/grpo_run_dualclip_match.sh"
+    command="bash /home/anikait.singh/verl-stable/scripts/grpo/grpo_run_dualclip.sh"
     echo "Using GPU: $CUDA_VISIBLE_DEVICES"
     echo $command
     if [ $dry_run = true ]; then
