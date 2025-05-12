@@ -12,7 +12,8 @@ python3 -m verl.trainer.main_ppo \
     actor_rollout_ref.model.path=$BASE_MODEL \
     actor_rollout_ref.actor.optim.lr=1e-6 \
     actor_rollout_ref.model.use_remove_padding=True \
-    actor_rollout_ref.actor.clip_ratio=0.2 \
+    actor_rollout_ref.actor.clip_ratio_low=0.2 \
+    actor_rollout_ref.actor.clip_ratio_high=0.5 \
     actor_rollout_ref.actor.ppo_mini_batch_size=56 \
     actor_rollout_ref.actor.ppo_micro_batch_size=56 \
     actor_rollout_ref.actor.use_dynamic_bsz=True \
@@ -52,4 +53,6 @@ python3 -m verl.trainer.main_ppo \
     trainer.test_freq=2 \
     trainer.total_training_steps=501 \
     trainer.default_local_dir=/home/anikait.singh/rl_behaviors_verl_stable/ppo/$EXPERIMENT_NAME \
+    trainer.extrapolation_val=False \
+    trainer.max_extrapolation_length=16384 \
     trainer.total_epochs=$EPOCHS $@

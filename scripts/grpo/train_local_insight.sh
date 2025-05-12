@@ -17,20 +17,20 @@ models=(
 )
 num_models=${#models[@]}
 names=(
-    insight-qwen3-1.7b-grpo
-    insight-qwen2.5-3b-grpo
+    insight-qwen3-1.7b-grpo-v3
+    insight-qwen2.5-3b-grpo-v3
 )
 num_names=${#names[@]}
 
 train_data_dirs=(
-    "/home/anikait.singh/rl_behaviors_verl_stable/data_insights_rl_v2"
-    "/home/anikait.singh/rl_behaviors_verl_stable/data_insights_rl_v2"
+    "/home/anikait.singh/rl_behaviors_verl_stable/data_insights_rl_v3"
+    "/home/anikait.singh/rl_behaviors_verl_stable/data_insights_rl_v3"
 )
 num_train_data_dirs=${#train_data_dirs[@]}
 
 eval_data_dirs=(
-    "/home/anikait.singh/rl_behaviors_verl_stable/data_insights_rl_v2"
-    "/home/anikait.singh/rl_behaviors_verl_stable/data_insights_rl_v2"
+    "/home/anikait.singh/rl_behaviors_verl_stable/data_insights_rl_v3"
+    "/home/anikait.singh/rl_behaviors_verl_stable/data_insights_rl_v3"
 )
 num_eval_data_dirs=${#eval_data_dirs[@]}
 
@@ -40,7 +40,7 @@ gpus=(
 )
 num_gpus=${#gpus[@]}
 
-PROJECT_NAME='verl_stable_insight_grpo_a100retry_0510'
+PROJECT_NAME='verl_stable_insight_v3_clip_grpo_0511'
 
 
 if [ $num_models -ne $num_names ]; then

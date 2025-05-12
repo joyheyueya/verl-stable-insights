@@ -53,4 +53,6 @@ python3 -m verl.trainer.main_ppo \
     trainer.test_freq=25 \
     trainer.total_training_steps=501 \
     trainer.default_local_dir=/home/anikait.singh/rl_behaviors_verl_stable/ppo/$EXPERIMENT_NAME \
+    trainer.extrapolation_val=False \
+    data.max_extrapolation_length=16384 \
     trainer.total_epochs=$EPOCHS $@

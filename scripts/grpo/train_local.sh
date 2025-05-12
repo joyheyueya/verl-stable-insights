@@ -13,29 +13,35 @@ export HF_TOKEN='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'
 
 models=(
     Qwen/Qwen3-1.7B
+    Qwen/Qwen3-1.7B
 )
 num_models=${#models[@]}
 names=(
-    qwen3-1.7b-hintsolgen-mixfalse-d1shs0ap-easy-chatfix3k
+    qwen3-1.7b-nohint-noextrap-chatfix3k
+    qwen3-1.7b-nohint-noextrap-promptsuff-chatfix3k
 )
 num_names=${#names[@]}
 
 train_data_dirs=(
-    "/home/anikait.singh/rl_behaviors_verl_stable/data_d1shs0ap-easy-mixFalse-nochat"
+    '/home/anikait.singh/rl_behaviors_verl_stable/data_d1shs0ap-easy-verl'
+    "/home/anikait.singh/rl_behaviors_verl_stable/data_d1shs0ap-easy-verl-promptsuffix"
 )
 num_train_data_dirs=${#train_data_dirs[@]}
 
 eval_data_dirs=(
-    "/home/anikait.singh/rl_behaviors_verl_stable/data_d1shs0ap-easy-mixFalse-nochat"
+    '/home/anikait.singh/rl_behaviors_verl_stable/data_d1shs0ap-easy-verl'
+    "/home/anikait.singh/rl_behaviors_verl_stable/data_d1shs0ap-easy-verl-promptsuffix"
 )
 num_eval_data_dirs=${#eval_data_dirs[@]}
 
 gpus=(
     "0,1,2,3,4,5,6,7"
+    "0,1,2,3,4,5,6,7"
 )
 num_gpus=${#gpus[@]}
 
 project_names=(
+    grpo_qwen3_hintsolgen_d1shs0ap_easy_chatfix3k_0510
     grpo_qwen3_hintsolgen_d1shs0ap_easy_chatfix3k_0510
 )
 num_project_names=${#project_names[@]}
@@ -100,11 +106,13 @@ for i in $(seq 0 $((num_models-1))); do
     export CUDA_VISIBLE_DEVICES=${gpus[$i]}
     export PROJECT_NAME=$PROJECT_NAME
     export MAX_MODEL_LEN=8192
-    export MAX_PROMPT_LENGTH=3072
-    export EPOCHS=30
+    # export MAX_PROMPT_LENGTH=3072
+    export MAX_PROMPT_LENGTH=1024
+    # export EPOCHS=30
+    export EPOCHS=2
     export PROJECT_NAME=${project_names[$i]}
 
-    command="bash /home/anikait.singh/verl-stable/scripts/grpo/grpo_run_dualclip.sh"
+    command="bash /home/anikait.singh/verl-stable/scripts/grpo/grpo_run_dualclip_match.sh"
     echo "Using GPU: $CUDA_VISIBLE_DEVICES"
     echo $command
     if [ $dry_run = true ]; then
