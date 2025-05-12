@@ -17,8 +17,8 @@ models=(
 )
 num_models=${#models[@]}
 names=(
-    qwen3-1.7b-hintsolgen-mixtrue-d1shs0ap-easy-chatfix3k
-    qwen3-1.7b-hintsolgen-mixtrue-d1shs0ap-easy-chatfix3k-zerorew
+    qwen3-1.7b-hint-noextrap-mixtrue-easy3k
+    qwen3-1.7b-hint-noextrap-mixtrue-easy3k-zerorew
 )
 num_names=${#names[@]}
 
@@ -111,7 +111,8 @@ for i in $(seq 0 $((num_models-1))); do
     export PROJECT_NAME=$PROJECT_NAME
     export MAX_MODEL_LEN=8192
     export MAX_PROMPT_LENGTH=3072
-    export EPOCHS=30
+    # export EPOCHS=30
+    export EPOCHS=2
     export PROJECT_NAME=${project_names[$i]}
 
     command=${commands[$i]}
