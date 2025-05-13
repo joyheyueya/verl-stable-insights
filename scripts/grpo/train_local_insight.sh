@@ -17,8 +17,8 @@ models=(
 )
 num_models=${#models[@]}
 names=(
-    insight-qwen3-1.7b-grpo-v3
-    insight-qwen2.5-3b-grpo-v3
+    insight-qwen3-1.7b-noextrap-grpo-v3
+    insight-qwen2.5-3b-noextrap-grpo-v3
 )
 num_names=${#names[@]}
 

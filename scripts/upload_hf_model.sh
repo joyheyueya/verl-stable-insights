@@ -12,15 +12,18 @@ export HF_DATASETS_CACHE=$hf_cache_dir
 export HF_TOKEN='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'
 
 all_local_dirs=(
-    '/home/anikait.singh/rl_behaviors_verl_stable/ppo/insight-grpo-sft1e5-bsz64-maxlen2k-2epoch/global_step_60/actor'
+    '/home/anikait.singh/rl_behaviors_verl_stable/ppo/insight-qwen3-1.7b-noextrap-grpo-v3/global_step_60/actor'
+    '/home/anikait.singh/rl_behaviors_verl_stable/ppo/insight-qwen2.5-3b-noextrap-grpo-v3/global_step_60/actor'
 )
 num_local_dirs=${#all_local_dirs[@]}
 
 all_target_dirs=(
-    'Asap7772/insight-grpo-step60'
+    'Asap7772/insight-qwen3-1.7b-noextrap-grpo-v3-step60'
+    'Asap7772/insight-qwen2.5-3b-noextrap-grpo-v3-step60'
 )
 num_target_dirs=${#all_target_dirs[@]}
 all_hf_model_paths=(
+    'Qwen/Qwen3-1.7B'
     'Qwen/Qwen2.5-3B'
 )
 num_hf_model_paths=${#all_hf_model_paths[@]}
@@ -61,8 +64,8 @@ for i in $(seq 0 $((num_local_dirs - 1))); do
     if [ $dry_run = true ]; then
         echo -e "Dry run. Skipping...\n\n"
     else
-        eval ${command} &
-        eval ${command2} &
+        eval ${command} 
+        eval ${command2}
     fi
 
     exp_num=$((exp_num+1))
