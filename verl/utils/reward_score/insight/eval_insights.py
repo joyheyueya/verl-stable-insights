@@ -156,7 +156,7 @@ def get_insight_log_prob(
     output_list: List[str],
     model,
     tokenizer,
-    batch_size: int = 32,
+    batch_size,
     max_length: int = 4096,
     num_workers: int = os.cpu_count()
 ):
@@ -173,7 +173,8 @@ def get_insight_log_prob(
         num_workers: Number of worker threads for parallel tokenization
         
     Returns:
-        Tuple of tensors containing raw and length-normalized log probabilities
+        Tuple of tensors containing raw and length-normalized log probabilities,
+        and a list of lists containing individual token log probabilities
     """
     model.eval()
     
@@ -218,6 +219,7 @@ def get_insight_log_prob(
     # Process in batches
     log_sums = []
     log_sums_avg = []
+    log_probs_raw = []  # New: collect token-level log probs
     
     with torch.no_grad():
         for i in range(0, total_examples, batch_size):
@@ -247,8 +249,11 @@ def get_insight_log_prob(
                 log_sum = token_log_probs.sum().item()
                 log_sums.append(log_sum)
                 log_sums_avg.append(log_sum / float(max(output_len, 1)))
+                
+                # New: Store individual token log probs as a list
+                log_probs_raw.append(token_log_probs.cpu().tolist())
     
-    return torch.tensor(log_sums), torch.tensor(log_sums_avg)
+    return torch.tensor(log_sums), torch.tensor(log_sums_avg), log_probs_raw
 
 
 def compute_contrastive_loss(
@@ -259,8 +264,11 @@ def compute_contrastive_loss(
     insight_used, 
     model, 
     tokenizer,
+    lam_1,
+    lam_2,
+    max_length_reward,
     batch_size: int = 32,
-    contrastive_loss_type: str = 'logsumexp'
+    contrastive_loss_type: str = 'tokenmax'
 ):
     """
     Compute log probabilities and contrastive loss for insights under different contexts.
@@ -283,7 +291,7 @@ def compute_contrastive_loss(
     all_insights = insight_used * 4  # Repeat insights for each context type
     
     # Get scores for all contexts in a single batch
-    all_scores, all_scores_avg = get_insight_log_prob(
+    all_scores, all_scores_avg, all_scores_raw = get_insight_log_prob(
         all_contexts, all_insights, model, tokenizer, batch_size=batch_size
     )
     
@@ -296,22 +304,62 @@ def compute_contrastive_loss(
     paper1_scores, paper2_scores, joint_scores, no_context_scores = scores
     paper1_scores_avg, paper2_scores_avg, joint_scores_avg, no_context_scores_avg = scores_avg
     
-    if contrastive_loss_type == 'max':
-        max_score = torch.max(torch.max(paper1_scores, paper2_scores), no_context_scores)
-        max_score_avg = torch.max(torch.max(paper1_scores_avg, paper2_scores_avg), no_context_scores_avg)
-    elif contrastive_loss_type == 'logsumexp':
-        max_score = torch.logsumexp(torch.stack([paper1_scores, paper2_scores, no_context_scores]), dim=0)
-        max_score_avg = torch.logsumexp(torch.stack([paper1_scores_avg, paper2_scores_avg, no_context_scores_avg]), dim=0)
-    elif contrastive_loss_type == 'sum':
-        max_score = paper1_scores + paper2_scores + no_context_scores
-        max_score_avg = paper1_scores_avg + paper2_scores_avg + no_context_scores_avg
+    if not contrastive_loss_type == 'tokenmax':
+        if contrastive_loss_type == 'max':
+            max_score = torch.max(torch.max(paper1_scores, paper2_scores), no_context_scores)
+            max_score_avg = torch.max(torch.max(paper1_scores_avg, paper2_scores_avg), no_context_scores_avg)
+        elif contrastive_loss_type == 'logsumexp':
+            max_score = torch.logsumexp(torch.stack([paper1_scores, paper2_scores, no_context_scores]), dim=0)
+            max_score_avg = torch.logsumexp(torch.stack([paper1_scores_avg, paper2_scores_avg, no_context_scores_avg]), dim=0)
+        elif contrastive_loss_type == 'sum':
+            max_score = paper1_scores + paper2_scores + no_context_scores
+            max_score_avg = paper1_scores_avg + paper2_scores_avg + no_context_scores_avg
+        else:
+            raise ValueError(f"Invalid contrastive loss type: {contrastive_loss_type}")
+
+        # Calculate contrastive loss using vectorized operations
+        contrastive_loss = joint_scores - max_score
+        contrastive_loss_avg = joint_scores_avg - max_score_avg
     else:
-        raise ValueError(f"Invalid contrastive loss type: {contrastive_loss_type}")
-    
-    # Calculate contrastive loss using vectorized operations
-    contrastive_loss = joint_scores - max_score
-    contrastive_loss_avg = joint_scores_avg - max_score_avg
-    
+        # Split raw log probs for each context type
+        paper1_scores_raw = all_scores_raw[:n]
+        paper2_scores_raw = all_scores_raw[n:2*n]
+        joint_scores_raw = all_scores_raw[2*n:3*n]
+        no_context_scores_raw = all_scores_raw[3*n:4*n]
+
+        max_scores_raw = []
+        max_scores_avg_list = np.zeros(n)
+        token_counts = np.zeros(n, dtype=int)
+
+        for i in range(n):
+            p1 = np.array(paper1_scores_raw[i])
+            p2 = np.array(paper2_scores_raw[i])
+            nc = np.array(no_context_scores_raw[i])
+
+            min_len = min(len(p1), len(p2), len(nc))
+            token_counts[i] = min_len
+
+            context_arrays = np.stack([
+                p1[:min_len], 
+                p2[:min_len], 
+                nc[:min_len]
+            ])
+
+            # Calculate max along the first dimension (across contexts)
+            max_raw = np.max(context_arrays, axis=0)
+            max_scores_raw.append(max_raw)
+
+            # Calculate mean for this example
+            max_scores_avg_list[i] = np.mean(max_raw)
+
+        # Convert to torch tensor for consistency
+        max_scores_avg = torch.tensor(max_scores_avg_list)
+        length_reward = np.minimum(token_counts, max_length_reward)
+        length_reward_tensor = torch.tensor(length_reward, dtype=torch.float)    
+        reward = joint_scores_avg - lam_1 * max_scores_avg + lam_2 * length_reward_tensor
+        contrastive_loss = reward
+        contrastive_loss_avg = reward
+
     return (
         paper1_scores, 
         paper1_scores_avg, 
@@ -322,7 +370,9 @@ def compute_contrastive_loss(
         no_context_scores, 
         no_context_scores_avg, 
         contrastive_loss,
-        contrastive_loss_avg
+        contrastive_loss_avg,
+        max_scores_avg,
+        length_reward_tensor
     )
 
 

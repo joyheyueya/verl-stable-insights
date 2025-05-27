@@ -21,43 +21,37 @@ micro_batch_size=8
 micro_batch_size_per_gpu=1
 train_batch_size=64
 
-total_epochs=5
+total_epochs=1
 logger="['console','wandb']"
 truncation="right"
 apply_chat_template=False
 
 model_names=(
-  'Qwen/Qwen3-1.7B-Base'
-  'Qwen/Qwen2.5-3B'
+  'Qwen/Qwen3-1.7B'
 )
 num_model_names=${#model_names[@]}
 
 project_names=(
-  'insight-sft-0510'
-  'insight-sft-0510'
+  'twostagejoint-sft-1.7b-0525'
 )
 num_project_names=${#project_names[@]}
 
 base_data_paths=(
-  '/home/anikait.singh/rl_behaviors_verl_stable/insight-v2-sft'
-  '/home/anikait.singh/rl_behaviors_verl_stable/insight-v2-sft'
+  '/home/anikait.singh/rl_behaviors_verl_stable/d1shs0ap-twostagejoint-sft/'
 )
 num_base_data_paths=${#base_data_paths[@]}
 
 experiment_names=(
-  'insight-qwen3-1.7b-sft-0510'
-  'insight-qwen2.5-3b-sft-0510'
+  'twostagejoint-sft-lr1e-6-0525'
 )
 num_experiment_names=${#experiment_names[@]}
 
 max_lengths=(
-  12288
-  12288
+  10240
 )
 num_max_lengths=${#max_lengths[@]}
 
 lrs=(
-  1e-6
   1e-6
 )
 num_lrs=${#lrs[@]}

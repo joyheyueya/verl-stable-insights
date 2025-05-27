@@ -17,8 +17,8 @@ models=(
 )
 num_models=${#models[@]}
 names=(
-    insight-qwen3-1.7b-noextrap-grpo-v3
-    insight-qwen2.5-3b-noextrap-grpo-v3
+    insight-qwen3-1.7b-grpo-0527
+    insight-qwen2.5-3b-grpo-0527
 )
 num_names=${#names[@]}
 
@@ -40,7 +40,7 @@ gpus=(
 )
 num_gpus=${#gpus[@]}
 
-PROJECT_NAME='verl_stable_insight_v3_clip_grpo_0511'
+PROJECT_NAME='insight-new-grpo-0527'
 
 
 if [ $num_models -ne $num_names ]; then

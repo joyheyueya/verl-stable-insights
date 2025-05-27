@@ -6,6 +6,7 @@ from typing import Union
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from eval_insights import compute_contrastive_loss
 import argparse
+import numpy as np
 
 app = FastAPI(title="Contrastive Loss API")
 
@@ -15,6 +16,11 @@ class ContrastiveRequest(BaseModel):
     joint_examples: Union[List[str], str]
     no_context_examples: Union[List[str], str]
     insight_used: Union[List[str], str]
+    lam_1: float = 1.0
+    lam_2: float = 0.05
+    max_length_reward: int = 100
+    batch_size: int = 32
+    contrastive_loss_type: str = 'tokenmax'
 
 class ContrastiveResponse(BaseModel):
     paper1_scores: List[float]
@@ -27,8 +33,9 @@ class ContrastiveResponse(BaseModel):
     no_context_scores_avg: List[float]
     contrastive_loss: List[float]
     contrastive_loss_avg: List[float]
+    max_scores_avg: List[float]
+    length_reward_tensor: List[float]
 
-# Global variables to store model and tokenizer
 model = None
 tokenizer = None
 
@@ -53,18 +60,34 @@ async def compute_contrastive_loss_endpoint(request: ContrastiveRequest):
         if isinstance(request.insight_used, str):
             request.insight_used = [request.insight_used]
             
-        # Compute contrastive loss
-        paper1_scores, paper1_scores_avg, paper2_scores, paper2_scores_avg, joint_scores, joint_scores_avg, no_context_scores, no_context_scores_avg, contrastive_loss, contrastive_loss_avg = compute_contrastive_loss(
+        (
+            paper1_scores, 
+            paper1_scores_avg, 
+            paper2_scores, 
+            paper2_scores_avg, 
+            joint_scores, 
+            joint_scores_avg, 
+            no_context_scores, 
+            no_context_scores_avg, 
+            contrastive_loss, 
+            contrastive_loss_avg, 
+            max_scores_avg, 
+            length_reward_tensor
+        ) = compute_contrastive_loss(
             request.paper1_examples,
             request.paper2_examples,
             request.joint_examples,
             request.no_context_examples,
             request.insight_used,
             model,
-            tokenizer
+            tokenizer,
+            request.lam_1,
+            request.lam_2,
+            request.max_length_reward,
+            request.batch_size,
+            request.contrastive_loss_type
         )
         
-        # Convert tensors to lists
         return ContrastiveResponse(
             paper1_scores=paper1_scores.cpu().numpy().tolist(),
             paper1_scores_avg=paper1_scores_avg.cpu().numpy().tolist(),
@@ -75,7 +98,9 @@ async def compute_contrastive_loss_endpoint(request: ContrastiveRequest):
             no_context_scores=no_context_scores.cpu().numpy().tolist(),
             no_context_scores_avg=no_context_scores_avg.cpu().numpy().tolist(),
             contrastive_loss=contrastive_loss.cpu().numpy().tolist(),
-            contrastive_loss_avg=contrastive_loss_avg.cpu().numpy().tolist()
+            contrastive_loss_avg=contrastive_loss_avg.cpu().numpy().tolist(),
+            max_scores_avg=max_scores_avg.cpu().numpy().tolist(),
+            length_reward_tensor=length_reward_tensor.cpu().numpy().tolist()
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

@@ -12,22 +12,18 @@ export HF_DATASETS_CACHE=$hf_cache_dir
 export HF_TOKEN='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'
 
 all_local_dirs=(
-    '/home/anikait.singh/rl_behaviors_verl_stable/sft/qwen3_4blrablation_filtered_0503_lr1e5/global_step_2796'
-    '/home/anikait.singh/rl_behaviors_verl_stable/sft/qwen3_4blrablation_filtered_0503_lr5e5/global_step_2796'
-    '/home/anikait.singh/rl_behaviors_verl_stable/sft/qwen3_4blrablation_filtered_0503_lr1e6/global_step_2796'
-    '/home/anikait.singh/rl_behaviors_verl_stable/sft/qwen3_4blrablation_filtered_0503_lr5e6/global_step_2796'
-    '/home/anikait.singh/rl_behaviors_verl_stable/sft/qwen3_4blrablation_filtered_0503_lr1e7/global_step_2796'
-    '/home/anikait.singh/rl_behaviors_verl_stable/sft/qwen3_4blrablation_filtered_0503_lr5e7/global_step_2796'
+    '/home/anikait.singh/rl_behaviors_verl_stable/sft/hintgen-qwen3-4b-sft-1e-5init-star/global_step_180'
+    '/home/anikait.singh/rl_behaviors_verl_stable/sft/hintgen-qwen3-4b-sft-5e-6init-star/global_step_180'
+    '/home/anikait.singh/rl_behaviors_verl_stable/sft/hintgen-qwen3-4b-sft-1e-6init-star/global_step_180'
+    '/home/anikait.singh/rl_behaviors_verl_stable/sft/hintgen-qwen3-4b-sft-5e-7init-star/global_step_180'
 )
 num_local_dirs=${#all_local_dirs[@]}
 
 all_target_dirs=(
-    'Asap7772/qwen3_4blrablation_filtered_0503_lr1e5'
-    'Asap7772/qwen3_4blrablation_filtered_0503_lr5e5'
-    'Asap7772/qwen3_4blrablation_filtered_0503_lr1e6'
-    'Asap7772/qwen3_4blrablation_filtered_0503_lr5e6'
-    'Asap7772/qwen3_4blrablation_filtered_0503_lr1e7'
-    'Asap7772/qwen3_4blrablation_filtered_0503_lr5e7'
+    'Asap7772/hintgen-qwen3-4b-sft-1e-5init-star'
+    'Asap7772/hintgen-qwen3-4b-sft-5e-6init-star'
+    'Asap7772/hintgen-qwen3-4b-sft-1e-6init-star'
+    'Asap7772/hintgen-qwen3-4b-sft-5e-7init-star'
 )
 num_target_dirs=${#all_target_dirs[@]}
 

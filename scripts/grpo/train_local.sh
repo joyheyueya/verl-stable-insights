@@ -12,46 +12,39 @@ export HF_DATASETS_CACHE=$hf_cache_dir
 export HF_TOKEN='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'
 
 models=(
-    Qwen/Qwen3-1.7B
-    Qwen/Qwen3-1.7B
-    Qwen/Qwen3-1.7B
+    /home/anikait.singh/rl_behaviors_verl_stable/sft/twostagejoint-sft-lr1e-6-0525/global_step_1598
 )
 num_models=${#models[@]}
+
 names=(
-    qwen3-1.7b-nohint-noextrap-chatfix3k
-    qwen3-1.7b-nohint-noextrap-promptsuff-chatfix3k
-    qwen3-1.7b-hint-noextrap-mixfalse-easy3k
+    twostagejoint-grpo-sftlr1e-6-dishsoapeasy-highlen-0527
 )
 num_names=${#names[@]}
 
 train_data_dirs=(
-    '/home/anikait.singh/rl_behaviors_verl_stable/data_d1shs0ap-easy-verl'
-    "/home/anikait.singh/rl_behaviors_verl_stable/data_d1shs0ap-easy-verl-promptsuffix"
-    "/home/anikait.singh/rl_behaviors_verl_stable/data_d1shs0ap-easy-mixFalse-nochat"
+    "/home/anikait.singh/rl_behaviors_verl_stable/d1shs0ap-twostagejoint-rl-easy"
 )
 num_train_data_dirs=${#train_data_dirs[@]}
 
 eval_data_dirs=(
-    '/home/anikait.singh/rl_behaviors_verl_stable/data_d1shs0ap-easy-verl'
-    "/home/anikait.singh/rl_behaviors_verl_stable/data_d1shs0ap-easy-verl-promptsuffix"
-    "/home/anikait.singh/rl_behaviors_verl_stable/data_d1shs0ap-easy-mixFalse-nochat"
+    "/home/anikait.singh/rl_behaviors_verl_stable/d1shs0ap-twostagejoint-rl-easy"
 )
 num_eval_data_dirs=${#eval_data_dirs[@]}
 
 gpus=(
     "0,1,2,3,4,5,6,7"
-    "0,1,2,3,4,5,6,7"
-    "0,1,2,3,4,5,6,7"
 )
 num_gpus=${#gpus[@]}
 
 project_names=(
-    grpo_qwen3_hintsolgen_d1shs0ap_easy_chatfix3k_0510
-    grpo_qwen3_hintsolgen_d1shs0ap_easy_chatfix3k_0510
-    grpo_qwen3_hintsolgen_d1shs0ap_easy_chatfix3k_0510
+    grpo_twostagejoint_lengths_0527
 )
 num_project_names=${#project_names[@]}
 
+commands=(
+    'bash /home/anikait.singh/verl-stable/scripts/grpo/grpo_run_dualclip.sh'
+)
+num_commands=${#commands[@]}
 
 if [ $num_models -ne $num_names ]; then
     echo "Number of models and names should be the same"
@@ -75,6 +68,11 @@ fi
 
 if [ $num_models -ne $num_project_names ]; then
     echo "Number of models and project names should be the same"
+    exit 1
+fi
+
+if [ $num_models -ne $num_commands ]; then
+    echo "Number of models and commands should be the same"
     exit 1
 fi
 
@@ -111,20 +109,25 @@ for i in $(seq 0 $((num_models-1))); do
     # export VLLM_ATTENTION_BACKEND=XFORMERS
     export CUDA_VISIBLE_DEVICES=${gpus[$i]}
     export PROJECT_NAME=$PROJECT_NAME
-    export MAX_MODEL_LEN=8192
-    export MAX_PROMPT_LENGTH=3072
+    # export MAX_MODEL_LEN=8192
+    export MAX_MODEL_LEN=12288
+    # export MAX_MODEL_LEN=16384
+    export MAX_PROMPT_LENGTH=4096
+    # export MAX_PROMPT_LENGTH=3192
     # export MAX_PROMPT_LENGTH=1024
-    # export EPOCHS=30
-    export EPOCHS=2
+    export EPOCHS=30
+    # export EPOCHS=2
     export PROJECT_NAME=${project_names[$i]}
 
-    command="bash /home/anikait.singh/verl-stable/scripts/grpo/grpo_run_dualclip.sh"
+    # command="bash /home/anikait.singh/verl-stable/scripts/grpo/grpo_run_dualclip.sh"
+    command=${commands[$i]}
     echo "Using GPU: $CUDA_VISIBLE_DEVICES"
     echo $command
     if [ $dry_run = true ]; then
         echo -e "Dry run. Skipping...\n\n"
     else
         eval $command
+        bash /home/anikait.singh/TinyZero/launch_server.sh
     fi
     
     exp_num=$((exp_num+1))
