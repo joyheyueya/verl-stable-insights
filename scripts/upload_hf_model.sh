@@ -12,40 +12,28 @@ export HF_DATASETS_CACHE=$hf_cache_dir
 export HF_TOKEN='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'
 
 all_local_dirs=(
-    '/home/anikait.singh/rl_behaviors_verl_stable/ppo/insight-qwen3-1.7b-noextrap-grpo-v3/global_step_4/actor'
-    '/home/anikait.singh/rl_behaviors_verl_stable/ppo/insight-qwen3-1.7b-noextrap-grpo-v3/global_step_6/actor'
-    '/home/anikait.singh/rl_behaviors_verl_stable/ppo/insight-qwen3-1.7b-noextrap-grpo-v3/global_step_8/actor'
-    '/home/anikait.singh/rl_behaviors_verl_stable/ppo/insight-qwen3-1.7b-noextrap-grpo-v3/global_step_10/actor'
+    '/home/anikait.singh/rl_behaviors_verl_stable/ppo/insight-qwen2.5-3b-grpo-0527/global_step_10/actor'
+    '/home/anikait.singh/rl_behaviors_verl_stable/ppo/insight-qwen2.5-3b-grpo-0527/global_step_100/actor'
 
-    '/home/anikait.singh/rl_behaviors_verl_stable/ppo/insight-qwen2.5-3b-noextrap-grpo-v3/global_step_4/actor'
-    '/home/anikait.singh/rl_behaviors_verl_stable/ppo/insight-qwen2.5-3b-noextrap-grpo-v3/global_step_6/actor'
-    '/home/anikait.singh/rl_behaviors_verl_stable/ppo/insight-qwen2.5-3b-noextrap-grpo-v3/global_step_8/actor'
-    '/home/anikait.singh/rl_behaviors_verl_stable/ppo/insight-qwen2.5-3b-noextrap-grpo-v3/global_step_10/actor'
+    '/home/anikait.singh/rl_behaviors_verl_stable/ppo/insight-qwen3-1.7b-grpo-0527/global_step_10/actor'
+    '/home/anikait.singh/rl_behaviors_verl_stable/ppo/insight-qwen3-1.7b-grpo-0527/global_step_100/actor'
 )
 num_local_dirs=${#all_local_dirs[@]}
 
 all_target_dirs=(
-    'Asap7772/insight-qwen3-1.7b-noextrap-grpo-v3-step4'
-    'Asap7772/insight-qwen3-1.7b-noextrap-grpo-v3-step6'
-    'Asap7772/insight-qwen3-1.7b-noextrap-grpo-v3-step8'
-    'Asap7772/insight-qwen3-1.7b-noextrap-grpo-v3-step10'
+    'Asap7772/insight-qwen2.5-3b-grpo-0527-step10'
+    'Asap7772/insight-qwen2.5-3b-grpo-0527-step100'
 
-    'Asap7772/insight-qwen2.5-3b-noextrap-grpo-v3-step4'
-    'Asap7772/insight-qwen2.5-3b-noextrap-grpo-v3-step6'
-    'Asap7772/insight-qwen2.5-3b-noextrap-grpo-v3-step8'
-    'Asap7772/insight-qwen2.5-3b-noextrap-grpo-v3-step10'
+    'Asap7772/insight-qwen3-1.7b-grpo-0527-step10'
+    'Asap7772/insight-qwen3-1.7b-grpo-0527-step100'
 )
 num_target_dirs=${#all_target_dirs[@]}
 all_hf_model_paths=(
-    'Qwen/Qwen3-1.7B'
-    'Qwen/Qwen3-1.7B'
-    'Qwen/Qwen3-1.7B'
-    'Qwen/Qwen3-1.7B'
-
     'Qwen/Qwen2.5-3B'
     'Qwen/Qwen2.5-3B'
-    'Qwen/Qwen2.5-3B'
-    'Qwen/Qwen2.5-3B'
+    
+    'Qwen/Qwen3-1.7B'
+    'Qwen/Qwen3-1.7B'
 )
 num_hf_model_paths=${#all_hf_model_paths[@]}
 

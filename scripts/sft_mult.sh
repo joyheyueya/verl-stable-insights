@@ -27,32 +27,44 @@ truncation="right"
 apply_chat_template=False
 
 model_names=(
-  'Qwen/Qwen3-1.7B'
+  'Qwen/Qwen3-4B'
+  'Qwen/Qwen3-4B'
+  'Qwen/Qwen3-4B'
 )
 num_model_names=${#model_names[@]}
 
 project_names=(
-  'twostagejoint-sft-1.7b-0525'
+  'twostagejoint-sft-4b-0602'
+  'twostagejoint-sft-4b-0602'
+  'twostagejoint-sft-4b-0602'
 )
 num_project_names=${#project_names[@]}
 
 base_data_paths=(
   '/home/anikait.singh/rl_behaviors_verl_stable/d1shs0ap-twostagejoint-sft/'
+  '/home/anikait.singh/rl_behaviors_verl_stable/d1shs0ap-twostagejoint-sft/'
+  '/home/anikait.singh/rl_behaviors_verl_stable/d1shs0ap-twostagejoint-sft/'
 )
 num_base_data_paths=${#base_data_paths[@]}
 
 experiment_names=(
-  'twostagejoint-sft-lr1e-6-0525'
+  'twostagejoint-sft-4b-lr5e-6-0602'
+  'twostagejoint-sft-4b-lr1e-6-0602'
+  'twostagejoint-sft-4b-lr5e-7-0602'
 )
 num_experiment_names=${#experiment_names[@]}
 
 max_lengths=(
   10240
+  10240
+  10240
 )
 num_max_lengths=${#max_lengths[@]}
 
 lrs=(
+  5e-6
   1e-6
+  5e-7
 )
 num_lrs=${#lrs[@]}
 

@@ -50,7 +50,16 @@ def compute_score(data_source, solution_str, ground_truth, extra_info):
         curr_reward_list = response.json()
 
         if 'contrastive_loss_avg' in curr_reward_list:
-            return curr_reward_list['contrastive_loss_avg'][0]
+            curr_reward = curr_reward_list['contrastive_loss_avg']
+            if isinstance(curr_reward, list):
+                curr_reward = curr_reward[0]
+            elif isinstance(curr_reward, float):
+                pass
+            elif isinstance(curr_reward, np.ndarray):
+                curr_reward = curr_reward.squeeze().item()
+            else:
+                assert False, str(curr_reward)
+            return curr_reward
         else:
             return 0.
     except Exception as e:
