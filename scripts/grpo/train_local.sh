@@ -12,21 +12,18 @@ export HF_DATASETS_CACHE=$hf_cache_dir
 export HF_TOKEN='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'
 
 models=(
-    /home/anikait.singh/rl_behaviors_verl_stable/sft/twostagejoint-sft-4b-lr5e-6-0602/global_step_1598
-    /home/anikait.singh/rl_behaviors_verl_stable/sft/twostagejoint-sft-4b-lr1e-6-0602/global_step_1598
-    /home/anikait.singh/rl_behaviors_verl_stable/sft/twostagejoint-sft-4b-lr5e-7-0602/global_step_1598
+    CohenQu/Qwen3-1.7B_Joint.01.00_2e-5
+    CohenQu/Qwen3-1.7B-Base_Joint.01.00_2e-5
 )
 num_models=${#models[@]}
 
 names=(
-    twostagejoint-4b-grpo-sftlr5e-6-dishsoapeasy-format-0603
-    twostagejoint-4b-grpo-sftlr1e-6-dishsoapeasy-format-0603
-    twostagejoint-4b-grpo-sftlr5e-7-dishsoapeasy-format-0603
+    twostagejoint-1.7b-grpo-sftlr2e-5-dishsoapeasy-0609
+    twostagejoint-1.7b-base-grpo-sftlr2e-5-dishsoapeasy-0609
 )
 num_names=${#names[@]}
 
 train_data_dirs=(
-    "/home/anikait.singh/rl_behaviors_verl_stable/d1shs0ap-twostagejoint-rl-easy"
     "/home/anikait.singh/rl_behaviors_verl_stable/d1shs0ap-twostagejoint-rl-easy"
     "/home/anikait.singh/rl_behaviors_verl_stable/d1shs0ap-twostagejoint-rl-easy"
 )
@@ -35,28 +32,24 @@ num_train_data_dirs=${#train_data_dirs[@]}
 eval_data_dirs=(
     "/home/anikait.singh/rl_behaviors_verl_stable/d1shs0ap-twostagejoint-rl-easy"
     "/home/anikait.singh/rl_behaviors_verl_stable/d1shs0ap-twostagejoint-rl-easy"
-    "/home/anikait.singh/rl_behaviors_verl_stable/d1shs0ap-twostagejoint-rl-easy"
 )
 num_eval_data_dirs=${#eval_data_dirs[@]}
 
 gpus=(
     "0,1,2,3,4,5,6,7"
     "0,1,2,3,4,5,6,7"
-    "0,1,2,3,4,5,6,7"
 )
 num_gpus=${#gpus[@]}
 
 project_names=(
-    grpo_twostagejoint_format_4b_0603
-    grpo_twostagejoint_format_4b_0603
-    grpo_twostagejoint_format_4b_0603
+    grpo_twostagejoint_1.7b_0609
+    grpo_twostagejoint_1.7b_0609
 )
 num_project_names=${#project_names[@]}
 
 commands=(
-    'bash /home/anikait.singh/verl-stable/scripts/grpo/grpo_run_dualclip_formatjoint.sh'
-    'bash /home/anikait.singh/verl-stable/scripts/grpo/grpo_run_dualclip_formatjoint.sh'
-    'bash /home/anikait.singh/verl-stable/scripts/grpo/grpo_run_dualclip_formatjoint.sh'
+    'bash /home/anikait.singh/verl-stable/scripts/grpo/grpo_run_dualclip.sh'
+    'bash /home/anikait.singh/verl-stable/scripts/grpo/grpo_run_dualclip.sh'
 )
 num_commands=${#commands[@]}
 
@@ -119,6 +112,7 @@ for i in $(seq 0 $((num_models-1))); do
     export TRAIN_DATA_DIR=$curr_train_data_dir
     export EVAL_DATA_DIR=$curr_eval_data_dir
     export ROLLOUT_TP_SIZE=1
+    # export ROLLOUT_TP_SIZE=4
     export EXPERIMENT_NAME=${names[$i]}
     # export VLLM_ATTENTION_BACKEND=XFORMERS
     export CUDA_VISIBLE_DEVICES=${gpus[$i]}

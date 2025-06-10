@@ -16,7 +16,11 @@ all_local_dirs=(
     # '/home/anikait.singh/rl_behaviors_verl_stable/sft/hintgen-qwen3-4b-sft-5e-6init-star/global_step_180'
     # '/home/anikait.singh/rl_behaviors_verl_stable/sft/hintgen-qwen3-4b-sft-1e-6init-star/global_step_180'
     # '/home/anikait.singh/rl_behaviors_verl_stable/sft/hintgen-qwen3-4b-sft-5e-7init-star/global_step_180'
-    /home/anikait.singh/rl_behaviors_verl_stable/sft/twostagejoint-sft-lr1e-6-0525/global_step_1598
+    # /home/anikait.singh/rl_behaviors_verl_stable/sft/twostagejoint-sft-lr1e-6-0525/global_step_1598
+    '/home/anikait.singh/rl_behaviors_verl_stable/sft/twostagejoint-sftfiltered-chattemp-4b-base-lr1e-6-0605/global_step_639'
+    '/home/anikait.singh/rl_behaviors_verl_stable/sft/twostagejoint-sftfiltered-chattemp-4b-lr5e-6-0605/global_step_639'
+    '/home/anikait.singh/rl_behaviors_verl_stable/sft/twostagejoint-sftfiltered-chattemp-4b-base-lr5e-6-0605/global_step_639'
+
 )
 num_local_dirs=${#all_local_dirs[@]}
 
@@ -25,7 +29,9 @@ all_target_dirs=(
     # 'Asap7772/hintgen-qwen3-4b-sft-5e-6init-star'
     # 'Asap7772/hintgen-qwen3-4b-sft-1e-6init-star'
     # 'Asap7772/hintgen-qwen3-4b-sft-5e-7init-star'
-    'Asap7772/twostagejoint-sft-lr1e-6-0525'
+    'Asap7772/twostagejoint-sftfiltered-chattemp-4b-base-lr1e-6-0605'
+    'Asap7772/twostagejoint-sftfiltered-chattemp-4b-lr5e-6-0605'
+    'Asap7772/twostagejoint-sftfiltered-chattemp-4b-base-lr5e-6-0605'
 )
 num_target_dirs=${#all_target_dirs[@]}
 

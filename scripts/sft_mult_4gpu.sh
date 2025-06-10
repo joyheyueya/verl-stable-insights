@@ -24,7 +24,7 @@ train_batch_size=64
 total_epochs=5
 logger="['console','wandb']"
 truncation="right"
-apply_chat_template=False
+apply_chat_template=True
 
 model_names=(
   'Asap7772/qwen3_4blrablation_filtered_0503_lr1e6'

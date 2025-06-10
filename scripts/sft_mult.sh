@@ -24,47 +24,59 @@ train_batch_size=64
 total_epochs=1
 logger="['console','wandb']"
 truncation="right"
-apply_chat_template=False
+apply_chat_template=True
 
 model_names=(
-  'Qwen/Qwen3-4B'
-  'Qwen/Qwen3-4B'
-  'Qwen/Qwen3-4B'
+  # 'Qwen/Qwen3-4B-Base'
+  # 'Qwen/Qwen3-4B-Base'
+  # 'Qwen/Qwen3-4B'
+  'Asap7772/insight-qwen3-32b-sft'
+  'Asap7772/insight-qwen2.5-32b-sft'
 )
 num_model_names=${#model_names[@]}
 
 project_names=(
-  'twostagejoint-sft-4b-0602'
-  'twostagejoint-sft-4b-0602'
-  'twostagejoint-sft-4b-0602'
+  # 'twostagejoint-sftfiltered-chattemp-4b-0605'
+  # 'twostagejoint-sftfiltered-chattemp-4b-0605'
+  # 'twostagejoint-sftfiltered-chattemp-4b-0605'
+  'insight-star1-0609'
+  'insight-star1-0609'
 )
 num_project_names=${#project_names[@]}
 
 base_data_paths=(
-  '/home/anikait.singh/rl_behaviors_verl_stable/d1shs0ap-twostagejoint-sft/'
-  '/home/anikait.singh/rl_behaviors_verl_stable/d1shs0ap-twostagejoint-sft/'
-  '/home/anikait.singh/rl_behaviors_verl_stable/d1shs0ap-twostagejoint-sft/'
+  # '/home/anikait.singh/rl_behaviors_verl_stable/d1shs0ap-twostagejoint-sft-filtered/'
+  # '/home/anikait.singh/rl_behaviors_verl_stable/d1shs0ap-twostagejoint-sft-filtered/'
+  # '/home/anikait.singh/rl_behaviors_verl_stable/d1shs0ap-twostagejoint-sft-filtered/'
+  '/home/anikait.singh/rl_behaviors_verl_stable/insights_qwen2.5_star1/'
+  '/home/anikait.singh/rl_behaviors_verl_stable/insights_qwen3_star1/'
 )
 num_base_data_paths=${#base_data_paths[@]}
 
 experiment_names=(
-  'twostagejoint-sft-4b-lr5e-6-0602'
-  'twostagejoint-sft-4b-lr1e-6-0602'
-  'twostagejoint-sft-4b-lr5e-7-0602'
+  # 'twostagejoint-sftfiltered-chattemp-4b-base-lr5e-6-0605'
+  # 'twostagejoint-sftfiltered-chattemp-4b-base-lr1e-6-0605'
+  # 'twostagejoint-sftfiltered-chattemp-4b-lr5e-6-0605'
+  'insight-qwen3-star1-0609'
+  'insight-qwen2.5-star1-0609'
 )
 num_experiment_names=${#experiment_names[@]}
 
 max_lengths=(
-  10240
-  10240
-  10240
+  # 10240
+  # 10240
+  # 10240
+  8192
+  8192
 )
 num_max_lengths=${#max_lengths[@]}
 
 lrs=(
-  5e-6
-  1e-6
-  5e-7
+  # 5e-6
+  # 1e-6
+  # 5e-6
+  2e-5
+  2e-5
 )
 num_lrs=${#lrs[@]}
 

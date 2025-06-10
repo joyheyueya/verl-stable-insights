@@ -23,6 +23,7 @@ def extract_insight(generated_text):
         insight = insights_extracted[0]
     else:
         insight = ''
+    insight = insight.replace('[[', '').replace(']]', '').replace('<insight>', '').replace('</insight>', '').strip()
     return insight
 
 def compute_score(data_source, solution_str, ground_truth, extra_info):

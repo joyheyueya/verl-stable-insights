@@ -12,28 +12,16 @@ export HF_DATASETS_CACHE=$hf_cache_dir
 export HF_TOKEN='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'
 
 all_local_dirs=(
-    '/home/anikait.singh/rl_behaviors_verl_stable/ppo/insight-qwen2.5-3b-grpo-0527/global_step_10/actor'
-    '/home/anikait.singh/rl_behaviors_verl_stable/ppo/insight-qwen2.5-3b-grpo-0527/global_step_100/actor'
-
-    '/home/anikait.singh/rl_behaviors_verl_stable/ppo/insight-qwen3-1.7b-grpo-0527/global_step_10/actor'
-    '/home/anikait.singh/rl_behaviors_verl_stable/ppo/insight-qwen3-1.7b-grpo-0527/global_step_100/actor'
+    '/home/anikait.singh/rl_behaviors_verl_stable/ppo/twostagejoint-4b-base-grpo-sftlr5e-6-dishsoapeasy-0603/global_step_100/actor'
 )
 num_local_dirs=${#all_local_dirs[@]}
 
 all_target_dirs=(
-    'Asap7772/insight-qwen2.5-3b-grpo-0527-step10'
-    'Asap7772/insight-qwen2.5-3b-grpo-0527-step100'
-
-    'Asap7772/insight-qwen3-1.7b-grpo-0527-step10'
-    'Asap7772/insight-qwen3-1.7b-grpo-0527-step100'
+    'Asap7772/twostagejoint-4b-base-grpo-sftlr5e-6-dishsoapeasy'
 )
 num_target_dirs=${#all_target_dirs[@]}
 all_hf_model_paths=(
-    'Qwen/Qwen2.5-3B'
-    'Qwen/Qwen2.5-3B'
-    
-    'Qwen/Qwen3-1.7B'
-    'Qwen/Qwen3-1.7B'
+    'Qwen/Qwen3-4B-Base'
 )
 num_hf_model_paths=${#all_hf_model_paths[@]}
 
