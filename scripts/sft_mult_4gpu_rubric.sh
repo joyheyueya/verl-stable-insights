@@ -1,4 +1,15 @@
 #!/bin/bash
+
+#SBATCH --account=cocoflops                 # Specify the account
+#SBATCH --partition=cocoflops               # Specify the partition
+#SBATCH --nodelist=cocoflops-hgx-1        # Request the specific node
+#SBATCH --gres=gpu:4                        # Request GPUs
+#SBATCH --cpus-per-gpu=8
+#SBATCH --mem=160GB                         # Memory request
+#SBATCH --time=256:00:00                    # Time limit
+#SBATCH --output=sft_mult_4gpu_rubric.out
+#SBATCH --error=sft_mult_4gpu_rubric.err
+
 eval "$(conda shell.bash hook)"
 conda activate verl
 
@@ -32,12 +43,12 @@ model_names=(
 num_model_names=${#model_names[@]}
 
 project_names=(
-  'sft-test-0721'
+  '0728_rubric'
 )
 num_project_names=${#project_names[@]}
 
 base_data_paths=(
-  '/next/u/heyueya/verl-stable-insights/insights_qwen3_star1'
+  '/next/u/heyueya/verl-stable-insights/data/0728rubric_sft_imagineCoT'
 #   '/iris/u/asap7772/rl_behaviors_verl_stable/data_d1shs0ap-star-data-balanceFalse-nohintTrue'
 #   '/iris/u/asap7772/rl_behaviors_verl_stable/data_d1shs0ap-star-data-balanceTrue-nohintFalse'
 #   '/iris/u/asap7772/rl_behaviors_verl_stable/data_d1shs0ap-star-data-balanceTrue-nohintTrue'
@@ -50,7 +61,7 @@ base_data_paths=(
 num_base_data_paths=${#base_data_paths[@]}
 
 experiment_names=(
-  'testing'
+  '0728rubric_sft'
 )
 num_experiment_names=${#experiment_names[@]}
 
