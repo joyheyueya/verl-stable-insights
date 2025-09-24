@@ -3,6 +3,7 @@
 export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
 source /dfs/scratch0/shirwu/anaconda3/etc/profile.d/conda.sh
 conda activate verlj
+cd /dfs/project/kgrlm/shirwu/jo/verl-stable-insights
 
 # Set environment variables
 hf_cache_dir="/dfs/project/kgrlm/shirwu/jo/.cache/"
