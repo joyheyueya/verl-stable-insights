@@ -118,8 +118,8 @@ for i in $(seq 0 $((num_base_data_paths - 1))); do
   max_length=${max_lengths[$i]}
   lr=${lrs[$i]}
 
-  default_hdfs_dir="/next/u/heyueya/verl-stable-insights/sft_hdfs/${experiment_name}"
-  default_local_dir="/next/u/heyueya/verl-stable-insights/sft/${experiment_name}"
+  default_hdfs_dir="/dfs/project/kgrlm/shirwu/jo/verl-stable-insights/sft_hdfs/${experiment_name}"
+  default_local_dir="/dfs/project/kgrlm/shirwu/jo/verl-stable-insights/sft/${experiment_name}"
   mkdir -p "${default_local_dir}"
   mkdir -p "${default_hdfs_dir}"
 
