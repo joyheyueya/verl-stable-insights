@@ -25,7 +25,7 @@ micro_batch_size=4
 micro_batch_size_per_gpu=1
 train_batch_size=128
 
-total_epochs=5
+total_epochs=6
 logger="['console','wandb']"
 truncation="right"
 apply_chat_template=True
