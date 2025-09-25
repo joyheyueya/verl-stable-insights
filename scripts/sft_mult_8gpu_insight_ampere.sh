@@ -20,6 +20,7 @@ set -e  # Exit immediately if a command exits with a non-zero status
 # Shared training parameters
 prompt_key="query"
 response_key="completion"
+validation_interval=5
 micro_batch_size=4
 micro_batch_size_per_gpu=1
 train_batch_size=128
@@ -157,6 +158,7 @@ for i in $(seq 0 $((num_base_data_paths - 1))); do
     trainer.experiment_name=${experiment_name} \
     trainer.total_epochs=${total_epochs} \
     trainer.logger=${logger} \
+    trainer.validation_interval=${validation_interval} \
     optim.lr=${lr} \
     model.enable_gradient_checkpointing=True \
     model.use_liger=True \
