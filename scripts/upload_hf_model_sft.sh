@@ -7,7 +7,7 @@ hf_cache_dir="/dfs/project/kgrlm/shirwu/jo/.cache/"
 
 # export WANDB_ENTITY=cocolab
 export HF_DATASETS_CACHE=$hf_cache_dir
-# export HF_TOKEN='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'
+
 
 all_local_dirs=(
     '/dfs/project/kgrlm/shirwu/jo/verl-stable-insights/sft/0922_Qwen3-14B_star1/global_step_45'
