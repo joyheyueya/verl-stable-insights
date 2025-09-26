@@ -41,7 +41,7 @@ project_names=(
 num_project_names=${#project_names[@]}
 
 base_data_paths=(
-  '/dfs/project/kgrlm/shirwu/jo/verl-stable-insights/data/0922_Qwen3-14B_star1'
+  '/dfs/project/kgrlm/shirwu/jo/verl-stable-insights/data/0922_Qwen3-14B_star1_v2single_insight'
 #   '/iris/u/asap7772/rl_behaviors_verl_stable/data_d1shs0ap-star-data-balanceFalse-nohintTrue'
 #   '/iris/u/asap7772/rl_behaviors_verl_stable/data_d1shs0ap-star-data-balanceTrue-nohintFalse'
 #   '/iris/u/asap7772/rl_behaviors_verl_stable/data_d1shs0ap-star-data-balanceTrue-nohintTrue'
@@ -54,7 +54,7 @@ base_data_paths=(
 num_base_data_paths=${#base_data_paths[@]}
 
 experiment_names=(
-  '0922_Qwen3-14B_star1'
+  '0922_Qwen3-14B_star1_v2single_insight'
 )
 num_experiment_names=${#experiment_names[@]}
 
