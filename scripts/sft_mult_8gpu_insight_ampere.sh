@@ -13,7 +13,6 @@ export WANDB_USER_EMAIL=heyueya@stanford.edu
 export WANDB__SERVICE_WAIT=300
 # export WANDB_ENTITY=cocolab
 export HF_DATASETS_CACHE=$hf_cache_dir
-# export HF_TOKEN='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'
 
 set -e  # Exit immediately if a command exits with a non-zero status
 
@@ -36,12 +35,12 @@ model_names=(
 num_model_names=${#model_names[@]}
 
 project_names=(
-  '0922_insight'
+  '0929_insight'
 )
 num_project_names=${#project_names[@]}
 
 base_data_paths=(
-  '/dfs/project/kgrlm/shirwu/jo/verl-stable-insights/data/0922_Qwen3-14B_star1_v2single_insight'
+  '/dfs/project/kgrlm/shirwu/jo/verl-stable-insights/data/0929_Qwen3-14B_sft_gt_insight'
 #   '/iris/u/asap7772/rl_behaviors_verl_stable/data_d1shs0ap-star-data-balanceFalse-nohintTrue'
 #   '/iris/u/asap7772/rl_behaviors_verl_stable/data_d1shs0ap-star-data-balanceTrue-nohintFalse'
 #   '/iris/u/asap7772/rl_behaviors_verl_stable/data_d1shs0ap-star-data-balanceTrue-nohintTrue'
@@ -54,7 +53,7 @@ base_data_paths=(
 num_base_data_paths=${#base_data_paths[@]}
 
 experiment_names=(
-  '0922_Qwen3-14B_star1_v2single_insight'
+  '0929_Qwen3-14B_sft_gt_insight'
 )
 num_experiment_names=${#experiment_names[@]}
 
