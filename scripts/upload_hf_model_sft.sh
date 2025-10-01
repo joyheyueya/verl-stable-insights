@@ -12,7 +12,7 @@ export HF_DATASETS_CACHE=$hf_cache_dir
 all_local_dirs=(
 #     '/dfs/project/kgrlm/shirwu/jo/verl-stable-insights/sft/0922_Qwen3-14B_star1/global_step_45'
 #     '/dfs/project/kgrlm/shirwu/jo/verl-stable-insights/sft/0922_Qwen3-14B_star1/global_step_20'
-    '/dfs/project/kgrlm/shirwu/jo/verl-stable-insights/sft/0922_Qwen3-14B_star1_v2single_insight/global_step_45'
+    '/dfs/project/kgrlm/shirwu/jo/verl-stable-insights/sft/0929_Qwen3-14B_sft_gt_insight/global_step_45'
 #     '/next/u/heyueya/verl-stable-insights/sft/0728rubric_sft/global_step_500'
 #     '/next/u/heyueya/verl-stable-insights/sft/0728rubric_sft/global_step_1000'
 )
@@ -21,7 +21,7 @@ num_local_dirs=${#all_local_dirs[@]}
 all_target_dirs=(
 #     'joyheyueya/0922_Qwen3-14B_star1_s45'
 #     'joyheyueya/0922_Qwen3-14B_star1_s20'
-    'joyheyueya/0922_Qwen3-14B_star1_v2single_insight_s45'
+    'joyheyueya/0929_Qwen3-14B_sft_gt_insight'
 #     'joyheyueya/0728rubric_sft_500'
 #     'joyheyueya/0728rubric_sft_1000'
 )
